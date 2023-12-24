@@ -13,8 +13,8 @@ $db = $conn->mConnect();
 $app = AppFactory::create();
 
 $app->add(new Tuupola\Middleware\CorsMiddleware([
-    'origin' => ['http://localhost:3000'],
-    'methods' => ['GET', 'POST', 'OPTIONS'],
+    'origin' => ['*'],
+    'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     'headers.allow' => ['Authorization', 'If-Match', 'Content-Type'],
     'headers.expose' => ['Authorization', 'Etag'],
 ]));

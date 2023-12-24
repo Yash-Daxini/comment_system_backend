@@ -13,13 +13,14 @@ $db = $conn->mConnect();
 $app = AppFactory::create();
 
 $app->add(new Tuupola\Middleware\CorsMiddleware([
-    'origin' => ['http://localhost:3000'],  // Adjust to your React app's port
-    'methods' => ['GET', 'POST', 'OPTIONS'],
+    'origin' => ['*'],  // Adjust to your React app's port
+    'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     'headers.allow' => ['Authorization', 'If-Match', 'Content-Type'],
     'headers.expose' => ['Authorization', 'Etag'],
 ]));
 
 $app->get('/Routes/post', function (Request $request, Response $response, array $args) use ($db) {
+
     $query = "SELECT * FROM post";
     $result = $db->query($query);
 
