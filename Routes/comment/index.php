@@ -20,7 +20,7 @@ $app->add(new Tuupola\Middleware\CorsMiddleware([
 ]));
 
 $app->get('/Routes/comment', function (Request $request, Response $response, array $args) use ($db) {
-    $query = "SELECT * FROM comment";
+    $query = "SELECT * FROM comment inner join user where comment.userId = user.userId";
     $result = $db->query($query);
 
     if ($result) {
@@ -83,7 +83,7 @@ $app->put('/Routes/comment/{id}', function (Request $request, Response $response
     $statement = $db->prepare($query);
 
     if ($statement) {
-        $statement->bind_param('siiiiissi', $comment_Description, $userId, $upvotes, $downvotes, $postId, $parentComment_Id, $creation_Date, $modification_Date,$id);
+        $statement->bind_param('siiiiissi', $comment_Description, $userId, $upvotes, $downvotes, $postId, $parentComment_Id, $creation_Date, $modification_Date, $id);
         $result = $statement->execute();
         if ($result) {
             $response->getBody()->write(json_encode(["message" => "Data updated successfully", "data" => $data]));

@@ -21,7 +21,7 @@ $app->add(new Tuupola\Middleware\CorsMiddleware([
 
 $app->get('/Routes/post', function (Request $request, Response $response, array $args) use ($db) {
 
-    $query = "SELECT * FROM post";
+    $query = "SELECT * FROM post inner join user where post.userId = user.userId";
     $result = $db->query($query);
 
     if ($result) {
