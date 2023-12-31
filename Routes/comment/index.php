@@ -65,6 +65,20 @@ $app->post('/Routes/comment', function (Request $request, Response $response, ar
         return $response;
     }
 });
+$app->get('/Routes/comment/{id}', function (Request $request, Response $response, array $args) use ($db) {
+    $id = $args['id'];
+    $query = "SELECT * FROM comment inner join user where comment.userId = user.userId && comment.comment_Id = $id";
+    $result = $db->query($query);
+
+    if ($result) {
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        $response->getBody()->write(json_encode($data));
+        return $response;
+    } else {
+        $response->getBody()->write(json_encode(["error" => "Failed to fetch data"]));
+        return $response;
+    }
+});
 $app->put('/Routes/comment/{id}', function (Request $request, Response $response, array $args) use ($db) {
     $id = $args['id'];
     $body = $request->getBody();
